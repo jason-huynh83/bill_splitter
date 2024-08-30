@@ -99,17 +99,17 @@ def main():
         })
         
         # Display styled DataFrame with custom HTML for no vertical scroll bar
-        st.markdown(
-            f"""
-            </style>
-            <div class="dataframe-container">
-            {styled_df.render()}
-            """,
-            unsafe_allow_html=True
-        )
+        # st.markdown(
+        #     f"""
+        #     </style>
+        #     <div class="dataframe-container">
+        #     {styled_df.render()}
+        #     """,
+        #     unsafe_allow_html=True
+        # )
 
-        # # Display styled DataFrame with Streamlit
-        # st.dataframe(styled_df, use_container_width=True)
+        # Display styled DataFrame with Streamlit
+        st.dataframe(styled_df, use_container_width=True)
         
         # Provide a selectbox to choose which row to remove
         st.subheader("")
