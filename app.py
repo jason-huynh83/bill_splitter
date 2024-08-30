@@ -31,6 +31,34 @@ def calculate_individual_shares(df, num_people, tax_amount, tip_amount):
 
 def main():
     st.title("Bill Splitter Web App")
+    
+    # Tutorial Section
+    with st.expander("Tutorial", expanded=True):
+        st.write("""
+        **Welcome to the Bill Splitter App!**
+
+        **How to Use:**
+
+        1. **Enter the Number of People**: Specify how many people are splitting the bill.
+
+        2. **Add Dishes**:
+           - **Dish Name**: Enter the name of the dish.
+           - **Dish Price**: Enter the price of the dish.
+           - **Number of People to Split**: Select how many people will split the cost of this dish.
+           - **Names to Split Dish**: Enter the names of the people splitting this dish (comma-separated).
+
+        3. **Submit**: Click the "Submit" button to add the dish and its cost details to the list.
+
+        4. **Review and Remove**:
+           - View the list of dishes and their costs.
+           - Use the dropdown to select a row to remove if needed.
+
+        5. **Calculate Costs**:
+           - **Enter Tax and Tip Percentages**: Provide tax and tip percentages.
+           - **View Individual Shares**: See how much each person owes based on the dishes they ordered.
+
+        **Note**: Each dish's cost is divided only among the people specified for that dish, so the final amount each person owes will reflect their share of the total costs.
+        """)
 
     # Input the number of people splitting the bill
     num_people = st.number_input("Enter the number of people splitting the whole bill:", min_value=1, step=1)
