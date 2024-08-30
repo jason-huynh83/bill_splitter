@@ -149,7 +149,7 @@ def main():
         if st.button("Remove Selected Row"):
             if row_to_remove is not None:
                 remove_row(row_to_remove)
-                st.rerun()  # Rerun to refresh the DataFrame display
+                # st.experimental_rerun()  # Rerun to refresh the DataFrame display
                 
         st.write('***************************')
         # Create columns for financial inputs
