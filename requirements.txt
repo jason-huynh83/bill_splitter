@@ -6,4 +6,6 @@ streamlit
 openpyxl
 lxml
 bs4
+openai
+pyyaml
 -e .
