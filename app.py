@@ -35,7 +35,9 @@ def main():
         base64_image = base64.b64encode(image_bytes).decode('utf-8')
         
         if 'df_image' not in st.session_state:
-            st.session_state.df_image = get_dataframe(base64_image)
+            with st.spinner("Reading Receipt . . ."):
+                st.session_state.df_image = get_dataframe(base64_image)
+      
             st.session_state.df_image['names'] = ''
         
         df_i = st.data_editor(st.session_state.df_image, num_rows = 'dynamic', use_container_width=True)
