@@ -36,6 +36,7 @@ def main():
         
         if 'df_image' not in st.session_state:
             with st.spinner("Reading Receipt . . ."):
+                
                 st.session_state.df_image = get_dataframe(base64_image)
       
             st.session_state.df_image['names'] = ''
