@@ -16,8 +16,8 @@ def main():
 
         1. **Submit Photo of Receipt**: Take a clear picture of the receipt or upload a photo of the receipt.
         2. **Enter Names Column**: In the names column please add the names of people splitting (separated with a comma)
-        2. **Ensure Table Matches Receipt**: In case of any discrepancies, the table is editable to make changes.
-        3. **Review and Remove**:
+        3. **Ensure Table Matches Receipt**: In case of any discrepancies, the table is editable to make changes.
+        4. **Review and Remove**:
            - View the list of dishes and their costs.
            - Add/Remove rows as needed
         5. **Calculate Costs**:
