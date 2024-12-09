@@ -24,6 +24,7 @@ def main():
            - **Enter Tax and Tip Percentages**: Provide tax and tip percentages.
         **Note**: Each dish's cost is divided only among the people specified for that dish, so the final amount each person owes will reflect their share of the total costs.
         """)
+        
 
     st.subheader("Step 1: Import Receipt")
     uploaded_receipt = st.file_uploader("Import image of Receipt")
