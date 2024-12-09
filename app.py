@@ -14,16 +14,14 @@ def main():
 
         **How to Use:**
 
-        1. **Submit Photo of Receipt**: Take a clear picture of the receipt.
+        1. **Submit Photo of Receipt**: Take a clear picture of the receipt or upload a photo of the receipt.
         2. **Enter Names Column**: In the names column please add the names of people splitting (separated with a comma)
-        2. **Ensure Receipt is correct**: Feel free to edit the table
-        3. **Submit**: Click the "Submit" button to add the dish and its cost details to the list.
-        4. **Review and Remove**:
+        2. **Ensure Table Matches Receipt**: In case of any discrepancies, the table is editable to make changes.
+        3. **Review and Remove**:
            - View the list of dishes and their costs.
-           - Use the dropdown to select a row to remove if needed.
+           - Add/Remove rows as needed
         5. **Calculate Costs**:
            - **Enter Tax and Tip Percentages**: Provide tax and tip percentages.
-           - **View Individual Shares**: See how much each person owes based on the dishes they ordered.
         **Note**: Each dish's cost is divided only among the people specified for that dish, so the final amount each person owes will reflect their share of the total costs.
         """)
 
