@@ -10,7 +10,7 @@ def get_dataframe(base64_image):
     # with open("config.yaml", "r") as file:
     #     config = yaml.safe_load(file)
 
-    # # Set the API key as an environment variable
+    # Set the API key as an environment variable
     # os.environ["OPENAI_API_KEY"] = config["token"]
 
     client = OpenAI(
@@ -58,10 +58,19 @@ def get_dataframe(base64_image):
         print("No valid data to create a DataFrame.")
 
 
-def calculate_individual_shares(df, tax_amount, tip_amount):
+def calculate_individual_shares(df, tax_amount, tip_amount, subtotal, is_percentage):
+    
     shares = {}
     for _, row in df.iterrows():
-        dish_price = row['price'] * (1 + (tax_amount / 100)) * (1 + (tip_amount / 100))
+        
+        if is_percentage:
+            dish_price = row['price'] * (1 + (tax_amount / 100)) * (1 + (tip_amount / 100))
+        else:
+            proportion = row['price'] / subtotal
+            tax_share = tax_amount * proportion
+            tip_share = tip_amount * proportion
+            dish_price = row['price'] + tax_share + tip_share
+            
         num_people_splitting = len(str(row['names']).split(','))
         
         names = [name.strip() for name in str(row['names']).split(',')]

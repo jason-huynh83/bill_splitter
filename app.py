@@ -47,18 +47,29 @@ def main():
         
         subtotal = df_i['price'].replace('', 0).astype(float).sum()
         
+        options = ['Percentage (%)', 'Dollar Value ($)']
+        option_selected = st.pills("Tax and Tip By:", options, selection_mode = 'single', default=options[0])
+        
         col1, col2 = st.columns(2)   
         
         with col1:
-            tax_percent = st.number_input("Enter Tax (%)", min_value=0.0, step=0.01)
+            tax_percent = st.number_input(f"Enter Tax {option_selected}", min_value=0.0, step=0.01)
         
         with col2:
-            tip_percent = st.number_input("Enter Tip (%)", min_value=0.0, step=0.01)
+            tip_percent = st.number_input(f"Enter Tip {option_selected}", min_value=0.0, step=0.01)
 
-        tax_amount = (tax_percent / 100) * subtotal
-        taxed_subtotal = tax_amount + subtotal
-        tip_amount = (tip_percent / 100) * taxed_subtotal
-        grand_total = subtotal + tax_amount + tip_amount
+        if option_selected == options[0]:
+            tax_amount = (tax_percent / 100) * subtotal
+            taxed_subtotal = tax_amount + subtotal
+            tip_amount = (tip_percent / 100) * taxed_subtotal
+            grand_total = subtotal + tax_amount + tip_amount
+            shares = calculate_individual_shares(df_i, tax_percent, tip_percent, None, True)
+            
+        if option_selected == options[1]:
+            tax_amount = tax_percent
+            tip_amount = tip_percent
+            grand_total = subtotal + tax_amount + tip_amount
+            shares = calculate_individual_shares(df_i, tax_percent, tip_percent, subtotal, False)
             
         st.write('***************************')
         st.write(f"**Subtotal:** ${subtotal:,.2f}")
@@ -66,7 +77,6 @@ def main():
         st.write(f"**Tip:** ${tip_amount:,.2f}")
         st.write(f"**Grand Total:** ${grand_total:,.2f}")
         
-        shares = calculate_individual_shares(df_i, tax_percent, tip_percent)
         st.write('***************************')
         st.write("**Amount Each Person Owes:**")
         for person, amount in shares.items():

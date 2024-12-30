@@ -2,7 +2,7 @@ pandas
 numpy
 seaborn
 matplotlib
-streamlit
+streamlit>=1.40.0
 openpyxl
 lxml
 bs4
