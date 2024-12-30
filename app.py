@@ -63,7 +63,7 @@ def main():
             taxed_subtotal = tax_amount + subtotal
             tip_amount = (tip_percent / 100) * taxed_subtotal
             grand_total = subtotal + tax_amount + tip_amount
-            shares = calculate_individual_shares(df_i, tax_percent, tip_percent, None, True)
+            shares = calculate_individual_shares(df_i, tax_percent, tip_percent, subtotal, True)
             
         if option_selected == options[1]:
             tax_amount = tax_percent
