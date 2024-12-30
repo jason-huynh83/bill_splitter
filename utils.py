@@ -7,15 +7,15 @@ import streamlit as st
 
 
 def get_dataframe(base64_image):
-    with open("config.yaml", "r") as file:
-        config = yaml.safe_load(file)
+    # with open("config.yaml", "r") as file:
+    #     config = yaml.safe_load(file)
 
     # Set the API key as an environment variable
-    os.environ["OPENAI_API_KEY"] = config["token"]
+    # os.environ["OPENAI_API_KEY"] = config["token"]
 
     client = OpenAI(
-        api_key=os.environ.get("OPENAI_API_KEY")
-        # api_key=st.secrets['OPENAI_API_KEY']
+        # api_key=os.environ.get("OPENAI_API_KEY")
+        api_key=st.secrets['OPENAI_API_KEY']
     )
 
     response = client.chat.completions.create(
