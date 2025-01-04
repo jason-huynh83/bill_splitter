@@ -10,7 +10,6 @@ def get_dataframe(base64_image):
     # with open("config.yaml", "r") as file:
     #     config = yaml.safe_load(file)
 
-    # Set the API key as an environment variable
     # os.environ["OPENAI_API_KEY"] = config["token"]
 
     client = OpenAI(
@@ -70,10 +69,18 @@ def calculate_individual_shares(df, tax_amount, tip_amount, subtotal, is_percent
             tax_share = tax_amount * proportion
             tip_share = tip_amount * proportion
             dish_price = row['price'] + tax_share + tip_share
-            
-        num_people_splitting = len(str(row['names']).split(','))
         
-        names = [name.strip() for name in str(row['names']).split(',')]
+        
+        # Checks if "Everyone" exists and if value == True
+        if row.get("Everyone", False):
+            # If exists and is True, then get all names outside specified cols
+            names = [col.strip() for col in df.columns if col not in ['Quantity','Item','price','Everyone']]
+            
+        else:
+            # If not in row or is False, then get columns outside specified rows
+            names = [col.strip() for col in df.columns if row[col] is True and col not in ['Quantity','Item','price','Everyone']]
+        
+        num_people_splitting = len(names)
         
         for name in names:
             if name in shares:

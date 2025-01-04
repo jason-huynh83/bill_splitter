@@ -15,7 +15,7 @@ def main():
         **How to Use:**
 
         1. **Submit Photo of Receipt**: Take a clear picture of the receipt or upload a photo of the receipt.
-        2. **Enter Names Column**: In the names column please add the names of people splitting (separated with a comma)
+        2. **Enter Names**: Please add the names of people splitting the bill (separated with a comma), in the table below, toggle names for splitting
         3. **Ensure Table Matches Receipt**: In case of any discrepancies, the table is editable to make changes.
         4. **Review and Remove**:
            - View the list of dishes and their costs.
@@ -36,14 +36,32 @@ def main():
             with st.spinner("Reading Receipt . . ."):
                 
                 st.session_state.df_image = get_dataframe(base64_image)
-      
-            st.session_state.df_image['names'] = ''
+
         
-        df_i = st.data_editor(st.session_state.df_image, num_rows = 'dynamic', use_container_width=True)
+            # st.session_state.df_image['names'] = ''
+        st.subheader('Step 2: Enter names of all people splitting')
+        names_input = st.text_input('Enter names (comma separated)', placeholder='e.g. Sam, Kobe, Jordan')
+        
+        names = [name.strip() for name in names_input.split(',') if name.strip()]
+        
+        if names:
+            for name in names:
+                if name not in st.session_state.df_image.columns:
+                    st.session_state.df_image['Everyone'] = False
+                    st.session_state.df_image[name] = False
+        
+        df_i = st.data_editor(st.session_state.df_image, 
+                              num_rows = 'dynamic', 
+                              column_config={
+                                  "names": st.column_config.CheckboxColumn(
+                                      "Is this person splitting?",
+                                      default = False
+                                  )
+                              },
+                              use_container_width=True)
+        
         
         df_i['price'] = df_i['price'].astype(float)
-        df_i['names'] = df_i['names'].astype(str)
-        
         
         subtotal = df_i['price'].replace('', 0).astype(float).sum()
         
