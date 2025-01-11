@@ -7,14 +7,14 @@ import streamlit as st
 
 
 def get_dataframe(base64_image):
-    # with open("config.yaml", "r") as file:
-    #     config = yaml.safe_load(file)
+    with open("config.yaml", "r") as file:
+        config = yaml.safe_load(file)
 
-    # os.environ["OPENAI_API_KEY"] = config["token"]
+    os.environ["OPENAI_API_KEY"] = config["token"]
 
     client = OpenAI(
-        # api_key=os.environ.get("OPENAI_API_KEY")
-        api_key=st.secrets['OPENAI_API_KEY']
+        api_key=os.environ.get("OPENAI_API_KEY")
+        # api_key=st.secrets['OPENAI_API_KEY']
     )
 
     response = client.chat.completions.create(
@@ -82,10 +82,38 @@ def calculate_individual_shares(df, tax_amount, tip_amount, subtotal, is_percent
         
         num_people_splitting = len(names)
         
+        
         for name in names:
             if name in shares:
                 shares[name] += dish_price / num_people_splitting
             else:
                 shares[name] = dish_price / num_people_splitting
                 
+
     return shares
+
+def generate_detail_breakdown(df):
+
+    names = [col.strip() for col in df.columns if col not in ['Quantity','Item','price']]
+    
+    detailed_breakdown = {name: {'Items': [], 'Prices': []} for name in names}
+
+    for _, row in df.drop('Quantity', axis =1).iterrows():
+        if row['Everyone']:
+            split_cost = row['price'] / (len(names) - 1)
+            
+            for name in names:
+                detailed_breakdown[name]['Items'].append(row['Item'])
+                detailed_breakdown[name]['Prices'].append(split_cost)
+
+        else:
+            for name in names:
+                if row[name]:
+                    detailed_breakdown[name]['Items'].append(row['Item'])
+                    detailed_breakdown[name]['Prices'].append(row['price']/len(row[row == True]))
+            
+    for name in names:
+        detailed_breakdown[name]['Total'] = sum(detailed_breakdown[name]['Prices'])
+        
+
+    return detailed_breakdown
