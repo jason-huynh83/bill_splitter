@@ -121,7 +121,16 @@ def main():
 
             
             detailed_breakdown = ''
-                        
+            sub_total_info = f"Subtotal: ${round(subtotal,2)}"
+            tax_and_tip_info = f"\nTaxes & Tips: ${round(tax_amount + tip_amount,2)}"
+            grand_total_info = f"\nGrand Total: ${round(grand_total,2)}\n"
+            amt_per_person_str = f"\nAmount Each Person Owes:"
+            
+            detailed_breakdown += sub_total_info
+            detailed_breakdown += tax_and_tip_info
+            detailed_breakdown += grand_total_info
+            detailed_breakdown += amt_per_person_str
+            
             for person, details in text_content.items():
                 person_info = f"\n{person}:\n"
                 detailed_breakdown += person_info
@@ -130,7 +139,7 @@ def main():
                     price_info = f"    - {item}: ${round(price, 2)}\n"
                     detailed_breakdown += price_info
 
-                tax_tip_info = f"Taxes and Tips: ${round(shares[person] - details['Total'], 2)}\n"
+                tax_tip_info = f"Taxes & Tips: ${round(shares[person] - details['Total'], 2)}\n"
                 detailed_breakdown += tax_tip_info 
                 
                 total_cost_info = f"Total Cost: ${round(shares[person], 2)}\n"
